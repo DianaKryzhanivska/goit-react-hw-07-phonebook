@@ -21,16 +21,17 @@ export const slice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.fulfilled, (state, action) => {
-        // state.items?.push(...action.payload);
-        state.items = action.payload;
+        state.contacts.items = action.payload;
       })
 
       .addCase(addContactThunk.fulfilled, (state, action) => {
-        state.items.push(action.payload);
+        state.contacts.items.push(action.payload);
       })
 
       .addCase(deleteContactThunk.fulfilled, (state, action) => {
-        state.items = state.items.filter(item => item.id !== item.payload.id);
+        state.contacts.items = state.contacts.items.filter(
+          item => item.id !== action.payload
+        );
       })
 
       .addMatcher(
@@ -40,7 +41,7 @@ export const slice = createSlice({
           deleteContactThunk.fulfilled
         ),
         (state, action) => {
-          state.isLoading = false;
+          state.contacts.isLoading = false;
         }
       )
       .addMatcher(
@@ -50,8 +51,8 @@ export const slice = createSlice({
           deleteContactThunk.pending
         ),
         (state, action) => {
-          state.isLoading = true;
-          state.error = null;
+          state.contacts.isLoading = true;
+          state.contacts.error = null;
         }
       )
       .addMatcher(
@@ -61,8 +62,8 @@ export const slice = createSlice({
           deleteContactThunk.rejected
         ),
         (state, action) => {
-          state.isLoading = false;
-          state.error = action.payload;
+          state.contacts.isLoading = false;
+          state.contacts.error = action.payload;
         }
       );
   },

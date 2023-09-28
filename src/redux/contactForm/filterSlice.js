@@ -10,8 +10,7 @@ export const slice = createSlice({
 
   reducers: {
     setFilter: (state, action) => {
-      // state.filter = action.payload;
-      return action.payload;
+      state.filter = action.payload;
     },
   },
 });

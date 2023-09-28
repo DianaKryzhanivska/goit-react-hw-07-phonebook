@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Label, Button, Input } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-// import { addContact } from 'redux/contactForm/contactsSlice';
 import { selectContacts } from 'redux/contactForm/selectors';
 import { addContactThunk } from 'redux/contactForm/operations';
-// import { nanoid } from '@reduxjs/toolkit';
+// import { toast } from 'react-toastify';
 
 export const ContactForm = () => {
   const contacts = useSelector(selectContacts);
@@ -26,7 +25,9 @@ export const ContactForm = () => {
     );
 
     if (isInContacts) {
-      alert('Contact is already in Phonebook');
+      alert(`Contact ${isInContacts.name} is already in Phonebook`);
+      setContactName('');
+      setContactNumber('');
       return;
     }
 
