@@ -16,11 +16,13 @@ export const initialState = {
 export const slice = createSlice({
   name: 'contacts',
   initialState,
+  reducers: {},
 
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.fulfilled, (state, action) => {
-        state.items.push(...action.payload);
+        // state.items?.push(...action.payload);
+        state.items = action.payload;
       })
 
       .addCase(addContactThunk.fulfilled, (state, action) => {
