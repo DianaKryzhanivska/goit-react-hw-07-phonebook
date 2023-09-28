@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Label, Button, Input } from './ContactForm.styled';
 // import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactForm/slice';
+import { addContact } from 'redux/contactForm/contactsSlice';
 import { selectContacts } from 'redux/contactForm/selectors';
 import { nanoid } from '@reduxjs/toolkit';
 
@@ -16,7 +16,7 @@ export const ContactForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (contacts.find(({ name }) => name === contactName)) {
+    if (contacts?.find(({ name }) => name === contactName)) {
       alert(`${contactName} is already in Phonebook`);
       return;
     }

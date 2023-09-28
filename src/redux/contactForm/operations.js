@@ -1,14 +1,14 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 
-axios.defaults.baseURL = 'https://651569e8dc3282a6a3ce5b84.mockapi.io/';
+axios.defaults.baseURL = 'https://651569e8dc3282a6a3ce5b84.mockapi.io';
 
 export const fetchContacts = createAsyncThunk(
-  'fetchAll',
+  'contacts/fetchAll',
   async (_, thunkAPI) => {
     try {
-      const res = await axios.get('contacts');
+      const res = await axios.get('/contacts');
       console.log(res);
       console.log(res.data);
       return res.data;
@@ -18,17 +18,18 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
-export const addContact = createAsyncThunk(
-  'addContact',
+export const addContactThunk = createAsyncThunk(
+  'contacts/addContact',
   async (body, thunkAPI) => {
     const contacts = thunkAPI.getState().contacts.contacts;
     const isInContacts = contacts.find(contact => contact.name === body.name);
+
     if (isInContacts) {
       toast.error(`Contact ${isInContacts} is already in Phonebook`);
       return thunkAPI.rejectWithValue('Contact is already in Phonebook');
     }
     try {
-      const { data } = await axios.post('contacts', body);
+      const { data } = await axios.post('/contacts', body);
       console.log(data);
       return data;
     } catch (error) {
@@ -37,11 +38,11 @@ export const addContact = createAsyncThunk(
   }
 );
 
-export const deleteContact = createAsyncThunk(
-  'deleteContact',
+export const deleteContactThunk = createAsyncThunk(
+  'contacts/deleteContact',
   async (id, thunkAPI) => {
     try {
-      const { data } = await axios.delete(`contacts/${id}`);
+      const { data } = await axios.delete(`/contacts/${id}`);
       console.log(data);
       return data;
     } catch (error) {

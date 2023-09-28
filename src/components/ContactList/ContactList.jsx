@@ -1,16 +1,24 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { List, Item, Button } from './ContactList.styled';
-import { selectContacts, selectFilter } from 'redux/contactForm/selectors';
+import {
+  selectContacts,
+  selectError,
+  selectFilter,
+  selectIsLoadind,
+} from 'redux/contactForm/selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from 'redux/contactForm/slice';
+import { deleteContact } from 'redux/contactForm/contactsSlice';
 
 export const ContactList = () => {
+  const loading = useSelector(selectIsLoadind);
+  const error = useSelector(selectError);
+
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectFilter);
   // console.log(contacts);
-  const filteredContacts = contacts.filter(contact =>
+  const filteredContacts = contacts?.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
@@ -19,7 +27,9 @@ export const ContactList = () => {
   };
   return (
     <List>
-      {filteredContacts.map(contact => (
+      {loading && <h1>Loading...</h1>}
+      {error && <h1>Error</h1>}
+      {filteredContacts?.map(contact => (
         <Item key={contact.id}>
           {contact.name + ' : ' + contact.number}
           {

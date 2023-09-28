@@ -16,7 +16,7 @@ export const App = () => {
       <ContactForm />
 
       <SubTitle>Contacts</SubTitle>
-      {contacts.length > 0 ? (
+      {contacts?.length > 0 ? (
         <Filter />
       ) : (
         <Info>There are no contacts in your phonebook.</Info>
